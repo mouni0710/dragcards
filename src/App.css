@@ -1,0 +1,166 @@
+.header_layout {
+  margin-top: 10px;
+  margin-left: 25px;
+}
+.searchTicket{
+  border: none;
+    border-bottom: 1px solid lightgrey !important;
+    border-radius: 0 !important;
+}
+.cardLayout{
+  margin: 0 !important;
+  padding: 10px !important;
+}
+.ui.search .prompt{
+  border: none !important;
+}
+.tickets_span {
+  margin-right: 10px;
+  font-size: 16px;
+}
+.assignWrap{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.assignTxt{
+  padding-right: 10px;
+}
+.blue_circle{
+  width: 25px;
+  height: 25px;
+  background-color: #2185d085;
+  border-radius: 50%;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.headRight {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+.headLeft {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.miniBtn {
+  width: 50px;
+  padding: 10px !important;
+}
+.icon{
+  margin: 0 !important;
+}
+
+.page_no {
+  margin: 0px 5px 0px 5px;
+}
+
+button {
+  background-color: #efefef !important;
+  margin-right: 10px !important;
+}
+
+.orders {
+  background-color: #efefef;
+  margin: 0px 5px 0px 5px;
+  width: 24% !important;
+  padding-right: 0px !important;
+  padding-left: 5px !important;
+}
+
+.card_header {
+  margin-top: 10px !important;
+}
+
+.card {
+  background-color: white;
+  box-shadow: -3px 0px 0px 0px #45c363;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  line-height: 22px;
+}
+
+.card_inactive {
+  background-color: white;
+  box-shadow: -3px 0px 0px 0px red;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  line-height: 22px;
+}
+
+.response_due {
+  border: 1px solid dodgerblue;
+    padding: 4px;
+    background-color: #bbd0e480;
+    color: #4f2ae4;
+    border-radius: 5px;
+    font-weight: bold;
+}   
+
+.card_details {
+  padding: 15px;
+  color: grey;
+}
+
+.card_date {
+  display: flex;
+  justify-content: space-between;
+}
+.dateTxt{
+  font-weight: bold;
+}
+.card_icon {
+  font-size: 15px;
+  color: lightblue;
+}
+.dashboard{
+  position: relative;
+}
+.msgPopup{
+  height: 30px !important;
+}
+
+.imgWrap{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: #4b4b79;
+  width: 55px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px 5px 25px 25px;
+}
+.card_order_no {
+  margin-top: 10px;
+}
+
+.card_layout {
+  overflow-y: scroll;
+  height: 600px;
+  padding: 5px;
+}
+
+.card_id {
+  padding-right: 10px;
+}
+
+.icon_image {
+  width: 4%;
+  position: fixed;
+  bottom: 25px;
+  right: 10px;
+}
+
+.active {
+  background-color: rgb(48, 231, 125) !important;
+  color: white !important
+}
