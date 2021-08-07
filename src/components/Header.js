@@ -1,29 +1,25 @@
 import React from 'react';
 import { Button, Icon, Search } from 'semantic-ui-react';
 
-class HeaderLayout extends React.Component {
-    render() {
-        const { handleTabChange, activeTab, SearchHandler, isLoading } = this.props;
-       
-        return (
-
+export default function HeaderLayout({  handleTabChange, activeTab}){
+   return (
             <div className="menu">
                 <div className="headLeft">
                     <span className="tickets_span"><b>Tickets</b></span>
                     <Button
-                        className={activeTab === 'all' ? 'active' : ''}
+                        className={activeTab === 'all' ? 'activeBtn' : ''}
                         onClick={() => handleTabChange('all')}
                     >
                         ALL
                     </Button>
                     <Button
-                        className={activeTab === 'myTickets' ? 'active' : ''}
+                        className={activeTab === 'myTickets' ? 'activeBtn' : ''}
                         onClick={() => handleTabChange('myTickets')}
                     >
                         ONLY MY TICKETS
                      </Button>
                     <Button
-                        className={activeTab === 'updated' ? 'active' : ''}
+                        className={activeTab === 'updated' ? 'activeBtn' : ''}
                         onClick={() => handleTabChange('updated')}
                     >RECENTLY UPDATED
                      </Button>
@@ -38,9 +34,7 @@ class HeaderLayout extends React.Component {
                     <div>
                         <Search
                             fluid
-                            loading={isLoading}
                             className="searchTicket"
-                            onSearchChange={SearchHandler}
                             placeholder="Search"
                         />
                     </div>
@@ -57,6 +51,3 @@ class HeaderLayout extends React.Component {
 
         )
     }
-}
-
-export default HeaderLayout;

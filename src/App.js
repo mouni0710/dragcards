@@ -1,117 +1,95 @@
-import React from 'react';
+import React, { useState } from 'react';
+import List from './components/List';
+import Header from './components/Header';
+import cardDetail from './cardDetails';
+import {Image} from 'semantic-ui-react';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import message from './images/message.png';
 import './App.css';
-import 'semantic-ui-css/semantic.min.css'
-import Header from './Header';
-import TicketDashBoard from './TicketDashBoard';
-import ticketList from './ticketList.json';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ticketList,
-      activeTab: 'all',
-      isLoading: false,
-    }
+
+
+export default function App() {
+  const [data, setData] = useState(cardDetail);
+  const [activeTab, setActiveTab] = useState('all');
+
+ const  handleTabChange = (name) => {
+      setActiveTab(name);
   }
 
-  handleTabChange = (name) => {
-    if (name === 'myTickets' || name === 'updated') {
-      this.setState({
-        ticketList : {
-          receivedOrders: [],
-          progressOrders: [],
-          deliveredOrders: [],
-          pickedUpOrders: [],
+  const onDragEnd = (result) => {
+    const { destination, source, draggableId, type } = result;
+    console.log('destination', destination, 'source', source, draggableId);
+
+    if (!destination) {
+      return;
+    }
+    if (type === 'list') {
+      const newListIds = data.listIds;
+      newListIds.splice(source.index, 1);
+      newListIds.splice(destination.index, 0, draggableId);
+      return;
+    }
+
+    const sourceList = data.lists[source.droppableId];
+    const destinationList = data.lists[destination.droppableId];
+    const draggingCard = sourceList.cards.filter(
+      (card) => card.id === draggableId
+    )[0];
+
+    if (source.droppableId === destination.droppableId) {
+      sourceList.cards.splice(source.index, 1);
+      destinationList.cards.splice(destination.index, 0, draggingCard);
+      const newSate = {
+        ...data,
+        lists: {
+          ...data.lists,
+          [sourceList.id]: destinationList,
         },
-        activeTab: name,
-      });
+      };
+      setData(newSate);
     } else {
-      this.setState({
-        ticketList,
-        activeTab: name,
-      });
-    }
-  }
+      sourceList.cards.splice(source.index, 1);
+      destinationList.cards.splice(destination.index, 0, draggingCard);
 
-  onDragStart = (event, data) => {
-    event.dataTransfer.setData("orderNo", data.orderId);
-    this.dragged = event.currentTarget;
-  }
-  
-  onDragOver = (event) => {
-    event.preventDefault();
-    this.over = event.target;
-  }
-  
-  onDrop = (event, type) => {
-    const {ticketList} = this.state;
-      let orderNo = event.dataTransfer.getData("orderNo");
-      let cardDetails = ticketList.receivedOrders.filter((task) => {
-          if (task.orderId === orderNo) {
-              task.type = type;
-          }
-          return task;
-      });
-      let cardDetails1 = ticketList.progressOrders.filter((task) => {
-        if (task.orderId === orderNo) {
-            task.type = type;
-        }
-        return task;
-    });
-    let cardDetails2 = ticketList.deliveredOrders.filter((task) => {
-      if (task.orderId === orderNo) {
-          task.type = type;
-      }
-      return task;
-  });
-  let cardDetails3 = ticketList.pickedUpOrders.filter((task) => {
-    if (task.orderId === orderNo) {
-        task.type = type;
+      const newState = {
+        ...data,
+        lists: {
+          ...data.lists,
+          [sourceList.id]: sourceList,
+          [destinationList.id]: destinationList,
+        },
+      };
+      setData(newState);
     }
-    return task;
-});
-      this.setState({
-          ...this.state,
-          ticketList: {
-            receivedOrders: cardDetails,
-            progressOrders: cardDetails1,
-            deliveredOrders: cardDetails2,
-            pickedUpOrders: cardDetails3,
-          }
-      });
-  }
-  
-  dragEnd = (event) => {
-    // let data = this.state.tasks;
-    // let from = Number(this.dragged.dataset.id);
-    // let to = Number(this.over.dataset.id);
-    // data.splice(to, 0, data.splice(from, 1)[0]);
-    // this.setState({tasks: data});
-  }
-  
+  };
 
-  render () {
-    const {ticketList, activeTab, isLoading} = this.state;
-    return (
-      
-        <div className="draggableCards">
-                <Header
-                  handleTabChange={this.handleTabChange} 
-                  activeTab={activeTab}
-                  isLoading={isLoading}
-                />
-               <TicketDashBoard
-               dragEnd={this.dragEnd}
-               onDrop={this.onDrop}
-               onDragOver={this.onDragOver}
-               onDragStart={this.onDragStart}
-                  ticketList={ticketList}
-               />    
+  return (
+      <div
+      >
+        <Header handleTabChange={handleTabChange} activeTab={activeTab} />
+        <div className="dashboard">
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="app" type="list" direction="horizontal">
+            {(provided) => (
+              <div
+                style={{ display: 'flex'}}
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {data.listIds.map((listId, index) => {
+                  const list = data.lists[listId];
+                  return <List list={list} key={listId} index={index} />;
+                })}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+        <div className="imgWrap">
+            <Image src={message} alt="message" className="msgPopup" />
         </div>
-      
-    )
-  }
+        </div>
+      </div>
+  );
 }
-
-export default App;
