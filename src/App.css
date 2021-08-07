@@ -113,7 +113,7 @@
   }
   .cardWrap{
     height: 550px;
-    overflow-y: auto;
+    overflow-y: scroll;
   }
   
   .card_date {
